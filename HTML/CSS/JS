@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bloomify | Premium Flower Studio</title>
+  <link rel="stylesheet" href="leaf.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">Bloomify</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Flowers That Speak Feelings</h1>
+      <p>Luxury floral designs for moments that matter</p>
+      <button onclick="scrollToSection('shop')">Explore Collection</button>
+    </div>
+  </section>
+
+  <!-- SHOP -->
+<section class="shop" id="shop">
+  <h2>Our Best Sellers</h2>
+
+  <!-- PASTE THIS LINE HERE -->
+  <div class="product-grid" id="productGrid"></div>
+
+</section>
+
+
+
+
+
+  <!-- FLOWER COLLECTION MODALS -->
+<div class="modal" id="roseModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('roseModal')">&times;</span>
+    <h2>Rose</h2>
+    <p>
+      Roses symbolize love, beauty, and passion and are among the most popular
+      flowers worldwide.
+    </p>
+    <a href="https://en.wikipedia.org/wiki/Rose" target="_blank">
+      Read full details on Wikipedia
+    </a>
+  </div>
+</div>
+
+<div class="modal" id="sunflowerModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('sunflowerModal')">&times;</span>
+    <h2>Sunflower</h2>
+    <p>
+      Sunflowers represent happiness, positivity, and loyalty. They are known
+      for turning towards the sun.
+    </p>
+    <a href="https://en.wikipedia.org/wiki/Sunflower" target="_blank">
+      Read full details on Wikipedia
+    </a>
+  </div>
+</div>
+
+<div class="modal" id="tulipModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('tulipModal')">&times;</span>
+    <h2>Tulip</h2>
+    <p>
+      Tulips symbolize elegance and grace. They are widely associated with
+      spring and new beginnings.
+    </p>
+    <a href="https://en.wikipedia.org/wiki/Tulip" target="_blank">
+      Read full details on Wikipedia
+    </a>
+  </div>
+</div>
+
+<div class="modal" id="orchidModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('orchidModal')">&times;</span>
+    <h2>Orchid</h2>
+    <p>
+      Orchids represent luxury, strength, and beauty. They are admired for their
+      unique and exotic appearance.
+    </p>
+    <a href="https://en.wikipedia.org/wiki/Orchidaceae" target="_blank">
+      Read full details on Wikipedia
+    </a>
+  </div>
+</div>
+
+
+<section class="collection" id="collection">
+  <h2>All Flower Collection</h2>
+  <p>Explore flowers from around the world, arranged alphabetically</p>
+
+ <div class="flower-card" onclick="openModal('roseModal')">
+  <img src="images/rose.jpg" alt="Rose">
+  <h3>Rose</h3>
+</div>
+
+<div class="flower-card" onclick="openModal('sunflowerModal')">
+  <img src="images/sunflower.jpg" alt="Sunflower">
+  <h3>Sunflower</h3>
+</div>
+
+<div class="flower-card" onclick="openModal('tulipModal')">
+  <img src="images/tulip.jpg" alt="Tulip">
+  <h3>Tulip</h3>
+</div>
+
+<div class="flower-card" onclick="openModal('orchidModal')">
+  <img src="images/orchid.jpg" alt="Orchid">
+  <h3>Orchid</h3>
+</div>
+
+<!-- ALPHABETICAL PREMIUM FLOWER SECTION -->
+<section class="alphabetical-flowers" id="alphabeticalFlowers">
+  <h2>Explore Flowers A-Z</h2>
+  <p>Click on a letter to see flowers starting with that alphabet</p>
+
+  <!-- Alphabet navigation -->
+  <div class="alphabet-nav" id="alphabetNav"></div>
+
+  <!-- Flower Cards -->
+  <div class="flower-container" id="flowerContainer"></div>
+
+  <!-- Pagination Controls -->
+  <div class="pagination" id="pagination" style="text-align:center; margin-top:20px;">
+    <button id="prevPage" onclick="prevPage()">Prev</button>
+    <span id="pageNumbers"></span>
+    <button id="nextPage" onclick="nextPage()">Next</button>
+  </div>
+</section>
+
+<!-- MODAL FOR FLOWER INFO -->
+<div class="modal" id="flowerModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 id="modalName"></h2>
+    <p id="modalDescription"></p>
+    <a href="#" id="modalLink" target="_blank">Read more on Wikipedia</a>
+  </div>
+</div>
+
+<style>
+  #alphabeticalFlowers { padding: 40px 20px; background: #f8f8f8; }
+  #alphabeticalFlowers h2 { text-align: center; font-size: 28px; margin-bottom: 10px; }
+  #alphabeticalFlowers p { text-align: center; margin-bottom: 20px; font-size: 16px; }
+  .alphabet-nav { display: flex; flex-wrap: wrap; justify-content: center; margin-bottom: 25px; }
+  .alphabet-nav button { margin: 3px; padding: 8px 14px; border-radius: 6px; border: 1px solid #ccc; background: white; cursor: pointer; font-weight: 600; transition: 0.2s; }
+  .alphabet-nav button.active, .alphabet-nav button:hover { background: #ff7f9a; color: white; border-color: #ff7f9a; }
+  .flower-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; transition: all 0.3s ease; }
+  .flower-card { width: 150px; text-align: center; cursor: pointer; transition: transform 0.2s; }
+  .flower-card img { width: 100%; border-radius: 12px; }
+  .flower-card h3 { margin-top: 8px; font-size: 16px; color: #333; }
+  .flower-card:hover { transform: translateY(-5px); }
+  .pagination { display: flex; justify-content: center; align-items: center; margin-top: 20px; gap: 10px; }
+  .pagination button { padding: 6px 12px; border-radius: 6px; border: 1px solid #ccc; cursor: pointer; background: white; font-weight: 600; transition: 0.2s; }
+  .pagination button.active { background: #ff7f9a; color: white; border-color: #ff7f9a; }
+  .pagination button:hover { background: #ffd6e0; border-color: #ff7f9a; }
+</style>
+
+<script>
+  // Flower data
+  const flowers = [
+    { name: "Aster", description: "Asters symbolize patience and elegance.", link: "https://en.wikipedia.org/wiki/Aster" },
+    { name: "Azalea", description: "Azaleas symbolize abundance and wealth.", link: "https://en.wikipedia.org/wiki/Azalea" },
+    { name: "Begonia", description: "Begonias represent caution and deep thoughts.", link: "https://en.wikipedia.org/wiki/Begonia" },
+    { name: "Chamomile", description: "Chamomile symbolizes energy in adversity.", link: "https://en.wikipedia.org/wiki/Chamomile" },
+    { name: "Daisy", description: "Daisies symbolize innocence and purity.", link: "https://en.wikipedia.org/wiki/Daisy" },
+    { name: "Edelweiss", description: "Edelweiss represents courage and devotion.", link: "https://en.wikipedia.org/wiki/Edelweiss" },
+    { name: "Freesia", description: "Freesias symbolize friendship and trust.", link: "https://en.wikipedia.org/wiki/Freesia" },
+    { name: "Gardenia", description: "Gardenias symbolize secret love and purity.", link: "https://en.wikipedia.org/wiki/Gardenia" },
+    { name: "Hyacinth", description: "Hyacinths symbolize sport and playfulness.", link: "https://en.wikipedia.org/wiki/Hyacinth_(plant)" },
+    { name: "Iris", description: "Irises symbolize faith, hope, and wisdom.", link: "https://en.wikipedia.org/wiki/Iris_(plant)" },
+    { name: "Jasmine", description: "Jasmine symbolizes love, beauty, and sensuality.", link: "https://en.wikipedia.org/wiki/Jasmine" },
+    { name: "Kalanchoe", description: "Kalanchoe symbolizes endurance and lasting affection.", link: "https://en.wikipedia.org/wiki/Kalanchoe" },
+    { name: "Lavender", description: "Lavender represents purity and calm.", link: "https://en.wikipedia.org/wiki/Lavandula" },
+    { name: "Marigold", description: "Marigolds symbolize passion and creativity.", link: "https://en.wikipedia.org/wiki/Marigold" },
+    { name: "Narcissus", description: "Narcissus represents rebirth and renewal.", link: "https://en.wikipedia.org/wiki/Narcissus_(plant)" },
+    { name: "Orchid", description: "Orchids represent luxury, strength, and beauty.", link: "https://en.wikipedia.org/wiki/Orchidaceae" },
+    { name: "Peony", description: "Peonies symbolize romance and prosperity.", link: "https://en.wikipedia.org/wiki/Peony" },
+    { name: "Quince Blossom", description: "Symbolizes hope and prosperity.", link: "https://en.wikipedia.org/wiki/Quince" },
+    { name: "Rose", description: "Roses symbolize love, beauty, and passion.", link: "https://en.wikipedia.org/wiki/Rose" },
+    { name: "Sunflower", description: "Sunflowers represent happiness, positivity, and loyalty.", link: "https://en.wikipedia.org/wiki/Sunflower" },
+    { name: "Tulip", description: "Tulips symbolize elegance and grace.", link: "https://en.wikipedia.org/wiki/Tulip" },
+    { name: "Violet", description: "Violets symbolize loyalty and faithfulness.", link: "https://en.wikipedia.org/wiki/Violet_(plant)" },
+    { name: "Wisteria", description: "Wisteria symbolizes longevity and immortality.", link: "https://en.wikipedia.org/wiki/Wisteria" },
+    { name: "Xeranthemum", description: "Symbolizes immortality and everlasting love.", link: "https://en.wikipedia.org/wiki/Xeranthemum" },
+    { name: "Yarrow", description: "Yarrow symbolizes healing and protection.", link: "https://en.wikipedia.org/wiki/Yarrow" },
+    { name: "Zinnia", description: "Zinnias symbolize endurance, daily remembrance, and goodness.", link: "https://en.wikipedia.org/wiki/Zinnia" }
+  ];
+
+  const alphabetNav = document.getElementById("alphabetNav");
+  const flowerContainer = document.getElementById("flowerContainer");
+  const pageNumbers = document.getElementById("pageNumbers");
+  const modal = document.getElementById("flowerModal");
+  const modalName = document.getElementById("modalName");
+  const modalDescription = document.getElementById("modalDescription");
+  const modalLink = document.getElementById("modalLink");
+
+  let currentLetter = "A";
+  let currentPage = 1;
+  const itemsPerPage = 4;
+
+  // Alphabet buttons
+  for (let i = 65; i <= 90; i++) {
+    const letter = String.fromCharCode(i);
+    const btn = document.createElement("button");
+    btn.innerText = letter;
+    btn.onclick = () => { currentLetter = letter; currentPage = 1; updateActiveLetter(); showFlowers(); };
+    alphabetNav.appendChild(btn);
+  }
+
+  function updateActiveLetter() {
+    document.querySelectorAll(".alphabet-nav button").forEach(btn => {
+      btn.classList.toggle("active", btn.innerText === currentLetter);
+    });
+  }
+
+  function showFlowers() {
+    flowerContainer.innerHTML = "";
+    const filtered = flowers.filter(f => f.name.toUpperCase().startsWith(currentLetter));
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const pageFlowers = filtered.slice(start, end);
+
+    pageFlowers.forEach(flower => {
+      const card = document.createElement("div");
+      card.className = "flower-card";
+      card.innerHTML = `<img src="images/${flower.name.toLowerCase().replace(/ /g, "_")}.jpg" alt="${flower.name}"><h3>${flower.name}</h3>`;
+      card.onclick = () => openModal(flower);
+      flowerContainer.appendChild(card);
+    });
+
+    // Update pagination numbers
+    pageNumbers.innerHTML = `Page ${currentPage} of ${totalPages || 1}`;
+    document.getElementById("prevPage").disabled = currentPage === 1;
+    document.getElementById("nextPage").disabled = currentPage === totalPages || totalPages === 0;
+  }
+
+  function prevPage() {
+    if (currentPage > 1) { currentPage--; showFlowers(); }
+  }
+
+  function nextPage() {
+    const filtered = flowers.filter(f => f.name.toUpperCase().startsWith(currentLetter));
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+    if (currentPage < totalPages) { currentPage++; showFlowers(); }
+  }
+
+  function openModal(flower) {
+    modalName.innerText = flower.name;
+    modalDescription.innerText = flower.description;
+    modalLink.href = flower.link;
+    modal.style.display = "flex";
+  }
+
+  function closeModal() {
+    modal.style.display = "none";
+  }
+
+  // Initialize
+  updateActiveLetter();
+  showFlowers();
+</script>
+
+
+
+<!-- BOUQUET BUILDER -->
+<section class="bouquet">
+  <h2>Create Your Bouquet</h2>
+  <p>Select flowers and build your custom bouquet</p>
+
+  <!-- PASTE THIS HERE -->
+  <div class="bouquet-options" id="bouquetOptions"></div>
+
+  <div class="bouquet-summary">
+    <h3>Total Price: ₹<span id="totalPrice">0</span></h3>
+    <button onclick="orderBouquet()">Order Bouquet on WhatsApp</button>
+  </div>
+</section>
+
+
+
+  <!-- SERVICES -->
+<section class="services" id="services">
+  <h2>Our Services</h2>
+  <div class="service-container">
+
+    <div class="service-card">
+      <img src="images/wedding_decoration.jpg" alt="Wedding Decoration">
+      <div class="service-content">
+        <h3>Wedding Decoration</h3>
+        <p class="service-desc">
+          Elegant floral themes for weddings and receptions. We create enchanting settings with flowers that match your style and vision.
+        </p>
+        <p class="more-desc">
+          From grand entrance arrangements to delicate table centerpieces, our floral designs make your wedding memorable. We handle every detail from concept to installation.
+        </p>
+        <span class="read-more" onclick="toggleReadMore(this)">Read More</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <img src="images/event_styling.jpg" alt="Event Styling">
+      <div class="service-content">
+        <h3>Event Styling</h3>
+        <p class="service-desc">
+          Corporate and private event floral arrangements. We enhance your events with stylish, vibrant, and elegant floral décor.
+        </p>
+        <p class="more-desc">
+          Our team works with you to understand the theme and atmosphere you want, creating bespoke floral designs that impress your guests and elevate your brand or occasion.
+        </p>
+        <span class="read-more" onclick="toggleReadMore(this)">Read More</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <img src="images/custom_bouquets.jpg" alt="Custom Bouquets">
+      <div class="service-content">
+        <h3>Custom Bouquets</h3>
+        <p class="service-desc">
+          Personalized flower designs for every occasion. Make your gift or celebration truly unique with custom arrangements.
+        </p>
+        <p class="more-desc">
+          Choose flowers, colors, and styles that reflect your personality or message. We craft exquisite bouquets for birthdays, anniversaries, or corporate gifting, delivering beauty and emotion in every stem.
+        </p>
+        <span class="read-more" onclick="toggleReadMore(this)">Read More</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <h2>Contact Us</h2>
+    <p>Let’s create something beautiful together</p>
+    <button onclick="openWhatsApp()">Chat on WhatsApp</button>
+  </section>
+
+    <!-- FOOTER -->
+  <footer>
+    <p>© 2026 Bloomify Flower Studio. All rights reserved.</p>
+  </footer>
+
+  <!-- PASTE THIS LINE HERE -->
+  <script src="stream.js"></script>
+
+</body>
+</html>
+
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #f9fdfb;
+  color: #2c2c2c;
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 10%;
+  background: white;
+  position: sticky;
+  top: 0;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2f6f55;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* HERO */
+.hero {
+  height: 90vh;
+  background: linear-gradient(to right, #dfeeea, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  text-align: center;
+  max-width: 600px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+}
+
+button {
+  padding: 12px 25px;
+  background: #2f6f55;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* SHOP */
+.shop {
+  padding: 70px 10%;
+}
+
+.shop h2 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+}
+
+.product {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.product:hover {
+  transform: translateY(-8px);
+}
+
+.product img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.product .info {
+  padding: 15px;
+}
+
+/* SERVICES */
+.services {
+  background: #eef6f3;
+  padding: 70px 10%;
+  text-align: center;
+}
+
+.service-box {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+/* CONTACT */
+.contact {
+  padding: 70px 10%;
+  text-align: center;
+}
+
+/* FOOTER */
+footer {
+  background: #2f6f55;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+/* FLOWER TEXTURES */
+.product img {
+  filter: saturate(1.1) contrast(1.05);
+}
+
+/* BOUQUET BUILDER */
+.bouquet {
+  padding: 80px 10%;
+  background: #f9fdfb;
+  text-align: center;
+}
+
+.bouquet p {
+  margin-bottom: 40px;
+  color: #555;
+}
+
+.bouquet-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+}
+
+.bouquet-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.bouquet-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.bouquet-card .info {
+  padding: 15px;
+}
+
+.bouquet-card button {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.bouquet-summary {
+  margin-top: 40px;
+  font-size: 1.2rem;
+}
+
+.collection {
+  padding: 80px 10%;
+  background: #f7faf8;
+  text-align: center;
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.collection .flower-card {
+  background: white;
+  border-radius: 14px;
+  padding: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transition: transform 0.3s;
+}
+
+.collection .flower-card:hover {
+  transform: translateY(-6px);
+}
+
+.collection img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.product img,
+.bouquet-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+/* PRODUCT & BOUQUET CARDS */
+
+.product,
+.bouquet-card {
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+}
+
+.product:hover,
+.bouquet-card:hover {
+  transform: translateY(-6px);
+}
+
+.product img,
+.bouquet-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.product .info,
+.bouquet-card .info {
+  padding: 15px;
+  text-align: center;
+}
+
+.product h3,
+.bouquet-card h4 {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.product p,
+.bouquet-card p {
+  margin-bottom: 12px;
+  color: #2f6f55;
+  font-weight: 500;
+}
+
+.product button,
+.bouquet-card button {
+  padding: 10px 18px;
+  background: #2f6f55;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Services Section */
+.services { 
+  padding: 50px 20px; 
+  background: #fff; 
+  text-align: center; 
+}
+
+.services h2 { 
+  font-size: 32px; 
+  margin-bottom: 40px; 
+  color: #333; 
+}
+
+.service-container { 
+  display: flex; 
+  flex-wrap: wrap; 
+  justify-content: center; 
+  gap: 30px; 
+}
+
+.service-card { 
+  width: 300px; 
+  border-radius: 15px; 
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+  overflow: hidden; 
+  transition: transform 0.3s, box-shadow 0.3s; 
+  background: #fafafa; 
+  cursor: pointer;
+}
+
+.service-card:hover { 
+  transform: translateY(-10px); 
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2); 
+}
+
+.service-card img { 
+  width: 100%; 
+  height: 200px; 
+  object-fit: cover; 
+}
+
+.service-content { 
+  padding: 20px; 
+  text-align: left; 
+}
+
+.service-content h3 { 
+  font-size: 22px; 
+  margin-bottom: 10px; 
+  color: #ff4f81; 
+}
+
+.service-content p { 
+  font-size: 15px; 
+  color: #555; 
+  line-height: 1.5; 
+  margin-bottom: 10px; 
+}
+
+.more-desc { 
+  display: none; 
+}
+
+.read-more { 
+  color: #ff4f81; 
+  font-weight: 600; 
+  cursor: pointer; 
+  transition: 0.2s; 
+}
+
+.read-more:hover { 
+  color: #e6005c; 
+}
+
+/* Modal overlay */
+.modal {
+  display: none; /* hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center; /* horizontal center */
+  align-items: center;     /* vertical center */
+  z-index: 1000;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Modal content */
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  text-align: center;
+  position: relative;
+  transform: scale(0.8);
+  animation: zoomIn 0.3s ease forwards;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  color: #ff4f81;
+}
+
+.modal-content p {
+  color: #555;
+  line-height: 1.6;
+}
+
+.modal-content a {
+  color: #ff4f81;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 15px;
+}
+
+.modal-content a:hover {
+  text-decoration: underline;
+}
+
+/* Close button */
+.modal .close {
+  position: absolute;
+  top: 12px;
+  right: 15px;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #ff4f81;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+
+
+/* ===============================
+   FLOWER PRODUCTS (REAL IMAGES)
+================================ */
+
+const products = [
+  {
+    name: "Red Roses",
+    price: 300,
+    image: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    name: "Sunflowers",
+    price: 250,
+    image: "https://images.unsplash.com/photo-1597848212624-a19eb35e2651?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    name: "Pink Tulips",
+    price: 280,
+    image: "https://images.unsplash.com/photo-1524594150401-7f55d7d39f5a?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    name: "Orchids",
+    price: 400,
+    image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=800&q=80"
+  }
+];
+
+/* ===============================
+   SHOP GRID
+================================ */
+
+const grid = document.getElementById("productGrid");
+
+products.forEach(item => {
+  const card = document.createElement("div");
+  card.className = "product";
+  card.innerHTML = `
+    <img src="${item.image}" alt="${item.name}">
+    <div class="info">
+      <h3>${item.name}</h3>
+      <p>₹${item.price}</p>
+      <button onclick="quickOrder('${item.name}')">Order Now</button>
+    </div>
+  `;
+  grid.appendChild(card);
+});
+
+/* ===============================
+   BOUQUET BUILDER
+================================ */
+
+let total = 0;
+const bouquetContainer = document.getElementById("bouquetOptions");
+const totalPrice = document.getElementById("totalPrice");
+
+products.forEach(item => {
+  const div = document.createElement("div");
+  div.className = "bouquet-card";
+  div.innerHTML = `
+    <img src="${item.image}" alt="${item.name}">
+    <div class="info">
+      <h4>${item.name}</h4>
+      <p>₹${item.price}</p>
+      <button onclick="addToBouquet(${item.price})">Add to Bouquet</button>
+    </div>
+  `;
+  bouquetContainer.appendChild(div);
+});
+
+function addToBouquet(price) {
+  total += price;
+  totalPrice.innerText = total;
+}
+
+/* ===============================
+   SCROLL
+================================ */
+
+function scrollToSection(id) {
+  document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+}
+
+/* ===============================
+   WHATSAPP ORDER
+================================ */
+
+function quickOrder(name) {
+  const phone = "919999999999"; // replace with your WhatsApp number
+  window.open(
+    `https://wa.me/${phone}?text=I want to order ${name}`,
+    "_blank"
+  );
+}
+
+function orderBouquet() {
+  const phone = "919999999999"; // replace with your WhatsApp number
+  window.open(
+    `https://wa.me/${phone}?text=I want to order a custom bouquet worth ₹${total}`,
+    "_blank"
+  );
+}
+
+
+function openModal(id) {
+  document.getElementById(id).style.display = "flex";
+}
+
+function closeModal(id) {
+  document.getElementById(id).style.display = "none";
+}
+
+function toggleReadMore(element) {
+  const moreDesc = element.previousElementSibling;
+  if (moreDesc.style.display === "block") {
+    moreDesc.style.display = "none";
+    element.innerText = "Read More";
+  } else {
+    moreDesc.style.display = "block";
+    element.innerText = "Read Less";
+  }
+}
+
+// Open modal by id
+function openModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) modal.style.display = "flex";
+}
+
+// Close modal by id
+function closeModal(id) {
+  const modal = document.getElementById(id);
+  if (modal) modal.style.display = "none";
+}
+
+// Close modal when clicking outside content
+window.onclick = function(event) {
+  const modals = document.querySelectorAll(".modal");
+  modals.forEach(modal => {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+}
+
